@@ -5,6 +5,7 @@ Phase 1: 训练 MoE 世界模型
     python run_scripts/train_world_model.py -c exp_specs/phase1_wm/mamujoco/2halfcheetah/wm_2halfcheetah_good.yaml -g 0
 """
 
+from training_seeds import add_training_arguments, prepare_training, seed_output
 import argparse
 import os
 import sys
@@ -23,7 +24,10 @@ def main():
     parser = argparse.ArgumentParser(description="Train MoE World Model")
     parser.add_argument("-c", "--config", required=True, help="Config YAML path")
     parser.add_argument("-g", "--gpu", type=str, default="0", help="GPU id")
+    add_training_arguments(parser)
     args = parser.parse_args()
+    if prepare_training(args, None):
+        return
 
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -31,6 +35,7 @@ def main():
     # 加载配置
     with open(args.config, "r") as f:
         config = yaml.safe_load(f)
+        config["training_seed"] = args.training_seed
 
     print("=" * 60)
     print("Phase 1: Training MoE World Model")
@@ -97,6 +102,7 @@ def main():
         PROJECT_ROOT, "logs", "phase1_wm",
         config["env_name"], config["data_split"]
     )
+    save_dir = seed_output(save_dir, args)
 
     trainer.train(
         n_steps=config.get("n_train_steps", 40000),

@@ -12,6 +12,7 @@ Example:
 
 from __future__ import annotations
 
+from training_seeds import add_training_arguments, prepare_training, seed_output
 import argparse
 import json
 import os
@@ -328,13 +329,16 @@ def main() -> None:
     parser.add_argument("--lr", type=float, default=None)
     parser.add_argument("--val_ratio", type=float, default=None)
     parser.add_argument("--split_seed", type=int, default=20260715)
-    parser.add_argument("--train_seed", type=int, default=0)
+    parser.add_argument("--train_seed", type=int, default=None)
     parser.add_argument("--stats_samples", type=int, default=100_000)
     parser.add_argument("--save_freq", type=int, default=None)
     parser.add_argument("--log_freq", type=int, default=None)
     parser.add_argument("--val_batches", type=int, default=20)
     parser.add_argument("--save_dir", default="")
+    add_training_arguments(parser)
     args = parser.parse_args()
+    if prepare_training(args, 'train_seed'):
+        return
 
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -407,6 +411,7 @@ def main() -> None:
         str(config["data_split"]),
         f"H{args.horizon}",
     )
+    save_dir = seed_output(save_dir, args)
     os.makedirs(save_dir, exist_ok=True)
     optimizer = Adam(model.parameters(), lr=lr)
     rng = np.random.default_rng(args.train_seed)

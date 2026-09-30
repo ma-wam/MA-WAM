@@ -1,3 +1,4 @@
+from training_seeds import add_training_arguments, prepare_training, seed_output
 import argparse
 import os
 import sys
@@ -28,13 +29,17 @@ def main():
     )
     parser.add_argument("--steps", type=int, default=0)
     parser.add_argument("--save_root", default="logs/routing_variant_wm")
+    add_training_arguments(parser)
     args = parser.parse_args()
+    if prepare_training(args, None):
+        return
 
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     with open(args.config, "r") as f:
         config = yaml.safe_load(f)
+        config["training_seed"] = args.training_seed
 
     discrete_action = config.get("discrete_action", False)
     num_actions = config.get("num_actions", None)
@@ -82,6 +87,7 @@ def main():
         config["env_name"],
         config["data_split"],
     )
+    save_dir = seed_output(save_dir, args)
     trainer.train(
         n_steps=args.steps or config.get("n_train_steps", 40000),
         save_dir=save_dir,

@@ -137,3 +137,20 @@ python -m compileall -q diffuser world_model run_scripts scripts run_experiment.
 ## License and upstream component
 
 The CoFlow base implementation included in this release retains its MIT license in `LICENSE`.  MA-WAM extends that implementation with its routed world model and test-time planner.
+
+## Independent training seeds
+
+Policy configurations use five training seeds: `100, 200, 300, 400, 500`.
+The auxiliary training entry points now use the same five seeds by default,
+run sequentially in separate processes. Initialization and training sampling
+use the selected seed; each run saves under `seed_<seed>/` in its output
+directory, including a `training_seed.json` record.
+
+Use `--training-seeds 100 200 300` for three runs,
+`--training-seeds 100` for a single run, or `--dry-run` to inspect the
+commands without loading data or training. Evaluation seeds and dataset
+source seeds are separate. These defaults configure new training runs;
+they do not establish that historical results or released checkpoints
+contain five independently trained models.
+
+This applies to `run_scripts/train_world_model.py`, `train_monolithic_full.py`, `train_baseline_full_wm.py`, `train_routing_variant_wm.py`, and `train_trajectory_return_predictor.py`. Use the chosen seed subdirectory when supplying a world-model checkpoint to an evaluator. The return predictor retains its separate `--split_seed` for the episode split.

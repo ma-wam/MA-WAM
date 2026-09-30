@@ -5,6 +5,7 @@ works unchanged. Saves to logs/phase1_wm_mono/<env>/<split> (does NOT touch the 
 
 Usage: python run_scripts/train_monolithic_full.py -c <phase1_cfg>.yaml -g 0 [--model monolithic]
 """
+from training_seeds import add_training_arguments, prepare_training, seed_output
 import argparse, os, sys
 import torch, yaml
 
@@ -21,12 +22,16 @@ def main():
     parser.add_argument("-c", "--config", required=True)
     parser.add_argument("-g", "--gpu", type=str, default="0")
     parser.add_argument("--model", choices=["monolithic", "independent"], default="monolithic")
+    add_training_arguments(parser)
     args = parser.parse_args()
+    if prepare_training(args, None):
+        return
 
     os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     with open(args.config) as f:
         config = yaml.safe_load(f)
+        config["training_seed"] = args.training_seed
     print(f"Phase1 {args.model} WM | config={args.config} | device={device}")
 
     data_path = data_path_from_config(config, PROJECT_ROOT)
@@ -54,6 +59,7 @@ def main():
     )
     save_dir = os.path.join(PROJECT_ROOT, "logs", f"phase1_wm_{args.model}",
                             config["env_name"], config["data_split"])
+    save_dir = seed_output(save_dir, args)
     trainer.train(n_steps=config.get("n_train_steps", 40000), save_dir=save_dir,
                   save_freq=config.get("save_freq", 5000), log_freq=config.get("log_freq", 500))
     print(f"Done. Saved to: {save_dir}")
