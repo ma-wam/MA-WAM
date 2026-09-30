@@ -1,0 +1,12 @@
+name: ma-wam
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pytorch=1.12.1
+  - cudatoolkit=11.3
+  - pip
+  - pip:
+      - -r requirements.txt

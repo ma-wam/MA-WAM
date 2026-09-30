@@ -1,0 +1,25 @@
+# Phase 1: MoE World Model - Overcooked cramped_room medium
+env_type: overcooked
+env_name: cramped_room
+data_split: medium
+n_agents: 2
+obs_dim: 96
+act_dim: 6
+discrete_action: true
+num_actions: 6
+
+n_dyn_experts: 8
+n_rew_experts: 4
+hidden_dim: 256
+n_slots: 4
+
+batch_size: 256
+learning_rate: 0.0003
+n_train_steps: 40000
+val_ratio: 0.1
+save_freq: 5000
+log_freq: 500
+
+use_wandb: true
+wandb_project: "CoFlow-WM"
+wandb_run_name: "phase1-wm-cramped_room-medium"

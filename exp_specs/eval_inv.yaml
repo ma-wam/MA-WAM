@@ -1,0 +1,17 @@
+meta_data:
+  exp_name: "eval_inv"
+  script_path: "run_scripts/evaluate.py"
+  num_workers: 2
+
+variables:
+  log_dir: ["../../../legacy_madiff_outputs/logs/mad_mamujoco/2ant-Medium/h_10-hh_18-models.SharedConvAttentionDeconv-r_320.0-dl_datasets.SequenceDataset-ctde_False/100"]
+
+constants:
+  # eval
+  load_steps: [0]
+  num_eval: 10
+  num_envs: 10
+  evaluator: "utils.MADEvaluator"
+  overwrite: True
+  use_ddim_sample: True
+  n_ddim_steps: 15

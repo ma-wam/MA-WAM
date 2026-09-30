@@ -1,0 +1,16 @@
+env_type: mpe
+env_name: simple_world_m2flow_n3
+data_split: medium-replay
+data_root: data/mpe_m2flow_n3
+n_agents: 3
+obs_dim: 24
+act_dim: 2
+batch_size: 256
+learning_rate: 0.0003
+n_train_steps: 40000
+val_ratio: 0.1
+save_freq: 5000
+log_freq: 500
+use_wandb: false
+wandb_project: "CoFlow-WM"
+wandb_run_name: "baseline-monolithic-world-mdreplay-m2flow-n3"

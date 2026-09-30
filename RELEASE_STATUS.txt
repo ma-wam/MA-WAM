@@ -1,0 +1,1 @@
+MA-WAM source-only release snapshot (2026-07-28). See README.md for data, checkpoint, policy-run, and benchmark-environment requirements.

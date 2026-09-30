@@ -1,0 +1,26 @@
+# Phase 1: MoE World Model 训练配置 - 4Ant Medium
+env_type: mamujoco
+env_name: 4ant
+data_split: Medium
+n_agents: 4
+obs_dim: 37  # Ant 4-agent per-agent obs dim
+act_dim: 2   # Ant 4-agent per-agent act dim
+
+# MoE 模型配置
+n_dyn_experts: 8
+n_rew_experts: 4
+hidden_dim: 256
+n_slots: 4
+
+# 训练配置
+batch_size: 256
+learning_rate: 0.0003
+n_train_steps: 40000
+val_ratio: 0.1
+save_freq: 5000
+log_freq: 500
+
+# wandb
+use_wandb: true
+wandb_project: "CoFlow-WM"
+wandb_run_name: "phase1-wm-4ant-medium"
