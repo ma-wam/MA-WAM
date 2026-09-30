@@ -1,40 +1,32 @@
-# Tested with Python 3.8.20, PyTorch 1.12.1+cu113, and CUDA 11.3.
-# Install the CUDA-matched PyTorch build through environment.yml when possible.
-numpy==1.24.4
-PyYAML==6.0
-einops
-tqdm
+# Python 3.8. Install pip==23.0.1 setuptools==65.5.0 wheel==0.38.4 first.
+# Install the desired PyTorch 1.12.1 build before this file.
 torch==1.12.1
-
-# CoFlow policy and evaluation stack
+numpy==1.24.4
+PyYAML==6.0.1
 diffusers==0.24.0
-gym>=0.18,<0.26
-gymnasium==0.27.1
-gtimer
-joblib==0.16.0
-matplotlib
+huggingface-hub==0.25.2
+# Legacy Gym metadata needs the bootstrap tool versions above.
+gym==0.12.1
+einops==0.8.1
+matplotlib==3.7.5
+seaborn==0.13.2
+scipy==1.10.1
+pandas==2.0.3
+gtimer==1.0.0b5
 ml-logger==0.8.69
 params-proto==2.9.6
-pandas
-scipy
-tensorboardX==2.0
-wandb
-
-# Benchmark and rendering dependencies.  Simulator assets require the
-# benchmark-specific setup described in README.md.
-Cython==0.29.21
-dm-control==1.0.8
-glfw==1.12.0
-mujoco==2.3.0
-mujoco-py<2.2,>=2.1
-opencv-python
-pygame
-pyglet==1.5.0
-PyOpenGL==3.1.5
-PySC2==3.0.0
-
-# Optional analysis and test dependencies
-pytest==3.8.2
-scikit-image==0.19.3
-seaborn
+tensorboardX==2.6.2.2
+protobuf==3.20.3
+wandb==0.16.6
+pygame==2.6.1
+pyglet==1.5.27
+opencv-python==4.10.0.84
 scikit-video==1.1.11
+scikit-image==0.21.0
+python-dateutil==2.9.0.post0
+tqdm==4.67.1
+psutil==7.0.0
+typed-argument-parser==1.7.2
+-e ./third_party/multiagent-particle-envs
+-e ./third_party/ddpg-agent
+-e .

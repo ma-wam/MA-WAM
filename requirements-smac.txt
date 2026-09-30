@@ -1,0 +1,3 @@
+protobuf==3.20.3
+PySC2==3.0.0
+git+https://github.com/oxwhirl/smac.git@d6aab33f76abc3849c50463a8592a84f59a5ef84

@@ -1,0 +1,40 @@
+# Tested with Python 3.8.20, PyTorch 1.12.1+cu113, and CUDA 11.3.
+# Install the CUDA-matched PyTorch build through environment.yml when possible.
+numpy==1.24.4
+PyYAML==6.0
+einops
+tqdm
+torch==1.12.1
+
+# CoFlow policy and evaluation stack
+diffusers==0.24.0
+gym>=0.18,<0.26
+gymnasium==0.27.1
+gtimer
+joblib==0.16.0
+matplotlib
+ml-logger==0.8.69
+params-proto==2.9.6
+pandas
+scipy
+tensorboardX==2.0
+wandb
+
+# Benchmark and rendering dependencies.  Simulator assets require the
+# benchmark-specific setup described in README.md.
+Cython==0.29.21
+dm-control==1.0.8
+glfw==1.12.0
+mujoco==2.3.0
+mujoco-py<2.2,>=2.1
+opencv-python
+pygame
+pyglet==1.5.0
+PyOpenGL==3.1.5
+PySC2==3.0.0
+
+# Optional analysis and test dependencies
+pytest==3.8.2
+scikit-image==0.19.3
+seaborn
+scikit-video==1.1.11

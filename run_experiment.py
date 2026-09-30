@@ -46,6 +46,7 @@ if __name__ == "__main__":
     exp_specs["meta_data"]["num_workers"] = num_workers
 
     # run the processes
+    failed_processes = []
     running_processes = []
     args_idx = 0
 
@@ -74,4 +75,9 @@ if __name__ == "__main__":
             ret_code = p.poll()
             if ret_code is None:
                 new_running_processes.append(p)
+            elif ret_code != 0:
+                failed_processes.append(ret_code)
         running_processes = new_running_processes
+
+    if failed_processes:
+        raise SystemExit("Training subprocesses failed: " + str(failed_processes))

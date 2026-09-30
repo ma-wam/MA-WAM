@@ -154,3 +154,38 @@ they do not establish that historical results or released checkpoints
 contain five independently trained models.
 
 This applies to `run_scripts/train_world_model.py`, `train_monolithic_full.py`, `train_baseline_full_wm.py`, `train_routing_variant_wm.py`, and `train_trajectory_return_predictor.py`. Use the chosen seed subdirectory when supplying a world-model checkpoint to an evaluator. The return predictor retains its separate `--split_seed` for the episode split.
+
+## Benchmark dependencies
+
+Use a separate environment for each repository: the projects share the
+`diffuser` package name and must not be installed together. The default
+`requirements.txt` supports the MPE training and evaluation path. Legacy
+Gym requires the pip/setuptools/wheel bootstrap versions shown above.
+The previous all-in-one dependency list is retained as
+`requirements-historical.txt` for reference, not as the installation command.
+
+For SMAC, additionally install `requirements-smac.txt` and StarCraft II
+with the appropriate maps. For MA-MuJoCo, install `requirements-mujoco.txt`,
+MuJoCo 2.1.0, and set `LD_LIBRARY_PATH` to include its `bin` directory.
+D4RL/mjrl and TensorFlow dataset converters are optional legacy integrations,
+not required to train from the supplied MPE NumPy layout.
+
+Verify the installation before providing datasets:
+
+```bash
+python scripts/check_install.py
+```
+
+On a minimal Linux host, install a C/C++ compiler, Python development headers,
+libcurl/OpenSSL development headers (for the logger's pycurl dependency),
+and OpenGL runtime libraries before pip installation. Headless runs can set
+`SDL_AUDIODRIVER=dummy`.
+
+The supported examples use vector observations in MPE, SMAC, and MA-MuJoCo.
+Inherited image-policy and PyBullet prototypes are not part of the tested
+release workflow. Full benchmark training and all historical checkpoints
+are not certified by the short installation/runtime checks.
+
+See [release verification](VERIFICATION.md) for the tested installation and runtime paths and their scope.
+
+MPE Tag and World also require the frozen opponent file `pretrained_adv_model.pt` under `diffuser/datasets/data/mpe/simple_tag/` or `simple_world/`, respectively. Spread does not require this opponent asset.
