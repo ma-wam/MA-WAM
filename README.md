@@ -1,6 +1,6 @@
 # MA-WAM release
 
-[Paper](https://arxiv.org/abs/2609.31281) · [Project page](https://ma-wam.github.io/) · [Models](https://huggingface.co/ma-wam/MA-WAM) · [Datasets](https://huggingface.co/datasets/Guowei-Zou/CoFlow-datasets)
+[Paper](https://arxiv.org/abs/2609.31281) · [Project page](https://ma-wam.github.io/) · [Models](https://huggingface.co/ma-wam/MA-WAM) · [Datasets](https://huggingface.co/datasets/coflow-project/CoFlow-datasets)
 
 By [Guowei Zou](https://guowei-zou.github.io/Guowei-Zou/) and collaborators.
 
